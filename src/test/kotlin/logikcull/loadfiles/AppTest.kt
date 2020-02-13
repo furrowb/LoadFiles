@@ -3,17 +3,39 @@
  */
 package logikcull.loadfiles
 
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import logikcull.loadfiles.parser.OptLoadFile
+import java.io.StringReader
+import java.nio.file.FileSystems
+import java.nio.file.Files
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
 class AppTest {
     @Test
-    fun testAppParse() {
-        val subject = App()
-        assertFails { subject.parse("/tmp/this/path/does/not/exist") }
+    fun nonexistentPath() {
+        val nonexistentPath = "/tmp/this/path/does/not/exist"
 
+        val parserFactory = mock<ParserFactory> {
+            on { getParser(any(), any()) } doReturn OptLoadFile(StringReader(""), emptyList(), emptyList())
+        }
+        val subject = App(parserFactory)
+        assertFails { subject.parse(nonexistentPath) }
+    }
+
+    @Test
+    fun optSuccessfulParse() {
+        val fullPath = javaClass.getResource("/test.opt").path
+        val path = FileSystems.getDefault().getPath(fullPath)
+
+        val parserFactory = mock<ParserFactory> {
+            on { getParser(any(), any()) } doReturn OptLoadFile(Files.newBufferedReader(path), emptyList(), emptyList())
+        }
+        val subject = App(parserFactory)
         val opt = subject.parse(javaClass.getResource("/test.opt").path)
-        assertEquals(opt.entries.size, 3)
+        assertEquals(opt.parse().size, 3)
     }
 }

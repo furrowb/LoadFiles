@@ -3,16 +3,17 @@
  */
 package logikcull.loadfiles
 
+import logikcull.loadfiles.parser.LoadFile
+import logikcull.loadfiles.parser.OptLoadFile
+import logikcull.loadfiles.validator.postload.PathValidatorPost
 import java.nio.file.FileSystems
 import java.nio.file.Files
 
-class App {
-    fun parse(pathname: String): OptLoadfile {
+class App(private val parserFactory: ParserFactory) {
+    fun parse(pathname: String): LoadFile {
         val path = FileSystems.getDefault().getPath(pathname)
-        if (path.toString().endsWith(".opt")) {
-            return OptLoadfile(Files.newBufferedReader(path))
-        }
-        throw IllegalArgumentException("Unrecognized file extension for file $path")
+        val reader = Files.newBufferedReader(path)
+        return parserFactory.getParser(pathname, reader)
     }
 }
 
@@ -20,14 +21,14 @@ fun main(args: Array<String>) {
     if (args.isEmpty()) {
         System.err.println("usage: gradle run --args 'path/to/loadfile1.opt path/to/loadfile2.opt'")
     }
-
+    val parserFactory = ParserFactory()
     for (path in args) {
         try {
-            App().parse(path).use { loadfile ->
+            App(parserFactory).parse(path).use { loadfile ->
                 println("| Loadfile: %-66s |\n".format(path))
                 println("| Control Number      | Volume              | Path                             |")
                 println("| ------------------- | ------------------- | -------------------------------- |")
-                for (entry in loadfile.entries) {
+                for (entry in loadfile.parse()) {
                     println("| %-19s | %-19s | %-32s |\n".format(entry.controlNumber, entry.volumeName, entry.path))
                 }
                 println("")

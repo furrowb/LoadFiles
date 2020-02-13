@@ -1,5 +1,7 @@
 package logikcull.loadfiles.validator
 
+import logikcull.loadfiles.LoadFileEntry
+import logikcull.loadfiles.validator.postload.PathValidatorPost
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertFalse
@@ -8,27 +10,24 @@ import kotlin.test.assertTrue
 class PathValidatorTest {
 
     @Test
-    fun validatePathWithoutPathSeparator() {
-        val filePath = getResourceFolderPath();
-        assertTrue(PathValidator.fileExists(filePath, "test.opt"))
-    }
-
-    @Test
-    fun validatePathWithPathSeparator() {
-        val filePath = getResourceFolderPath() + File.separatorChar;
-        assertTrue(PathValidator.fileExists(filePath, "test.opt"))
+    fun validPath() {
+        val filePath = "${getResourceFolderPath()}${File.separatorChar}test.opt";
+        val loadFileEntry = LoadFileEntry("1", "volume 1", filePath)
+        assertTrue(PathValidatorPost().validate(loadFileEntry).isValid)
     }
 
     @Test
     fun pathDoesNotExist() {
-        val filePath = getResourceFolderPath() + File.separatorChar;
-        assertFalse(PathValidator.fileExists(filePath, "file-does-not-exist"))
+        val filePath = "${getResourceFolderPath()}${File.separatorChar}file-does-not-exist"
+        val loadFileEntry = LoadFileEntry("1", "non-existent", filePath)
+        assertFalse(PathValidatorPost().validate(loadFileEntry).isValid)
     }
 
     @Test
     fun directoryIsNotAFile() {
-        val filePath = getResourceFolderPath() + File.separatorChar;
-        assertFalse(PathValidator.fileExists(filePath, ""))
+        val filePath = "${getResourceFolderPath()}${File.separatorChar}"
+        val loadFileEntry = LoadFileEntry("1", "lacking a file", filePath)
+        assertFalse(PathValidatorPost().validate(loadFileEntry).isValid)
     }
 
     private fun getResourceFolderPath(): String {
