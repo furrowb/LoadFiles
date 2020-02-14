@@ -3,7 +3,12 @@ package logikcull.loadfiles.loader
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.parser.XlfLoadFileParser
 import org.junit.Test
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.lang.NullPointerException
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class XlfLoaderFileParserTest {
 
@@ -23,4 +28,25 @@ class XlfLoaderFileParserTest {
         }
     }
 
+    @Test
+    fun missingImageName() {
+        val temp = File.createTempFile("bad-data", ".lfp")
+        val writer = BufferedWriter(FileWriter(temp))
+
+        writer.append("""
+            <loadfile>
+                <entries>
+                    <entry control-number="test-000001">
+                        <volume>Import Test 01</volume>
+                        <image-path>IMAGES/001/</image-path>
+                    </entry>
+                </entries>
+            </loadfile>
+        """.trimIndent())
+        writer.close()
+
+        val parser = XlfLoadFileParser(temp.absolutePath)
+        // No exception is thrown. Just no data is generated. Possible area of improvement
+        assertEquals(0, parser.parse().size)
+    }
 }
