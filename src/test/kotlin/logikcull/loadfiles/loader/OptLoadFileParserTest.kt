@@ -1,4 +1,4 @@
-package logikcull.loadfiles
+package logikcull.loadfiles.loader
 
 import logikcull.loadfiles.parser.OptLoadFileParser
 import kotlin.test.Test

@@ -7,7 +7,6 @@ import org.junit.Test
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
-import kotlin.math.exp
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
