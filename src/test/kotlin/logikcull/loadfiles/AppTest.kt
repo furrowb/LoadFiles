@@ -9,6 +9,7 @@ import com.nhaarman.mockitokotlin2.mock
 import logikcull.loadfiles.parser.OptLoadFileParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class AppTest {
     @Test
@@ -21,5 +22,13 @@ class AppTest {
         val subject = App(parserFactory)
         val opt = subject.parse(javaClass.getResource("/test.opt").path)
         assertEquals(opt.parse().size, 3)
+    }
+
+    @Test
+    fun nonExistentFile() {
+        val subject = App(ParserFactory())
+        assertFailsWith<NoSuchFileException> {
+            subject.parse("/some/path")
+        }
     }
 }

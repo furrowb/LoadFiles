@@ -4,9 +4,13 @@
 package logikcull.loadfiles
 
 import logikcull.loadfiles.parser.LoadFileParser
+import java.io.File
 
 class App(private val parserFactory: ParserFactory) {
     fun parse(pathname: String): LoadFileParser {
+        if (!File(pathname).exists()) {
+            throw NoSuchFileException(File(pathname))
+        }
         return parserFactory.getParser(pathname)
     }
 }
