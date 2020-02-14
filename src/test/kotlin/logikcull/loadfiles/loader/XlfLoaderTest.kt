@@ -1,14 +1,8 @@
 package logikcull.loadfiles.loader
 
 import logikcull.loadfiles.LoadFileEntry
-import logikcull.loadfiles.model.EntriesElement
-import logikcull.loadfiles.model.EntryElement
-import logikcull.loadfiles.model.XlfRootElement
 import logikcull.loadfiles.parser.XlfLoadFileParser
 import org.junit.Test
-import java.io.StringWriter
-import javax.xml.bind.JAXBContext
-import javax.xml.bind.Marshaller
 import kotlin.test.assertEquals
 
 class XlfLoaderTest {
@@ -31,19 +25,4 @@ class XlfLoaderTest {
         }
     }
 
-    @Test
-    fun testStuff() {
-        val entriesElement = EntriesElement()
-        entriesElement.entryElements.add(EntryElement("control", "volume", "path", "image"))
-        val root = XlfRootElement(entriesElement)
-        val jaxbContext = JAXBContext.newInstance(XlfRootElement::class.java)
-        val marshaller = jaxbContext.createMarshaller()
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
-        val stringWriter = StringWriter()
-        stringWriter.use {
-            marshaller.marshal(root, stringWriter)
-        }
-
-        println(stringWriter)
-    }
 }
