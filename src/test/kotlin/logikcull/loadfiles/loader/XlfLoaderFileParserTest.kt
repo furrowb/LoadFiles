@@ -5,7 +5,7 @@ import logikcull.loadfiles.parser.XlfLoadFileParser
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class XlfLoaderTest {
+class XlfLoaderFileParserTest {
 
     @Test
     fun validResults() {

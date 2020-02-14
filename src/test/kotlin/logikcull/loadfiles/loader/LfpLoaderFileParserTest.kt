@@ -10,7 +10,7 @@ import java.io.FileWriter
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class LfpLoaderTest {
+class LfpLoaderFileParserTest {
 
     @Test
     fun validResults() {
