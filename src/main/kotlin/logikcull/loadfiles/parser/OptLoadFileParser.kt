@@ -8,7 +8,7 @@ import java.nio.file.Files
 
 class OptLoadFileParser(
         private val path: String,
-        private val validators: List<PostLoadFileValidator> = emptyList()) : LoadFileParser(path, validators)
+        private val validators: List<PostLoadFileValidator> = emptyList()) : LoadFileParser(validators)
 {
     private val bufferedReader = Files.newBufferedReader(FileSystems.getDefault().getPath(path))
 

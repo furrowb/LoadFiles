@@ -11,7 +11,7 @@ import javax.xml.bind.JAXBException
 
 class XlfParseException(message: String, exception: Exception? = null): Exception(message, exception)
 
-class XlfLoadFileParser(private val path: String, private val validators: List<PostLoadFileValidator> = emptyList()): LoadFileParser(path, validators) {
+class XlfLoadFileParser(private val path: String, private val validators: List<PostLoadFileValidator> = emptyList()): LoadFileParser(validators) {
     private val file = File(path)
 
     override fun parseLoad(): List<LoadFileEntry> {
