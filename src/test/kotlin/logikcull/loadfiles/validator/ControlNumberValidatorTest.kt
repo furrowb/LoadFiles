@@ -1,9 +1,9 @@
 package logikcull.loadfiles.validator
 
-import junit.framework.Assert.assertFalse
 import logikcull.loadfiles.LoadFileEntry
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 
