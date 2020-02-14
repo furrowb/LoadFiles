@@ -2,8 +2,7 @@ package logikcull.loadfiles.parser
 
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.model.XlfRootElement
-import logikcull.loadfiles.validator.postload.PathValidatorPost
-import logikcull.loadfiles.validator.postload.PostLoadFileValidator
+import logikcull.loadfiles.validator.LoadFileResultValidator
 import java.io.File
 import java.lang.Exception
 import javax.xml.bind.JAXBContext
@@ -11,7 +10,7 @@ import javax.xml.bind.JAXBException
 
 class XlfParseException(message: String, exception: Exception? = null): Exception(message, exception)
 
-class XlfLoadFileParser(private val path: String, private val validators: List<PostLoadFileValidator> = emptyList()): LoadFileParser(validators) {
+class XlfLoadFileParser(private val path: String, private val validators: List<LoadFileResultValidator> = emptyList()): LoadFileParser(validators) {
     private val file = File(path)
 
     override fun parseLoad(): List<LoadFileEntry> {
@@ -40,6 +39,6 @@ class XlfLoadFileParser(private val path: String, private val validators: List<P
     }
 
     override fun close() {
-
+        //JAXB and File have nothing to close
     }
 }

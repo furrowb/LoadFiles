@@ -2,7 +2,7 @@ package logikcull.loadfiles.parser
 
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.exception.InvalidSizeException
-import logikcull.loadfiles.validator.postload.PostLoadFileValidator
+import logikcull.loadfiles.validator.LoadFileResultValidator
 import java.nio.file.FileSystems
 import java.nio.file.Files
 
@@ -19,7 +19,7 @@ enum class VolumeAndFileField(val index: Int){
     PAGE_COUNT(3)
 }
 
-class LfpLoadFileParser(private val path: String, private val validators: List<PostLoadFileValidator> = emptyList()): LoadFileParser(validators) {
+class LfpLoadFileParser(private val path: String, private val validators: List<LoadFileResultValidator> = emptyList()): LoadFileParser(validators) {
     private val bufferedReader = Files.newBufferedReader(FileSystems.getDefault().getPath(path))
 
     override fun parseLoad(): List<LoadFileEntry> {

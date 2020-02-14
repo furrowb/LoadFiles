@@ -1,7 +1,6 @@
 package logikcull.loadfiles.validator
 
 import logikcull.loadfiles.LoadFileEntry
-import logikcull.loadfiles.validator.postload.PathValidatorPost
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertFalse
@@ -13,21 +12,21 @@ class PathValidatorTest {
     fun validPath() {
         val filePath = "${getResourceFolderPath()}${File.separatorChar}test.opt";
         val loadFileEntry = LoadFileEntry("1", "volume 1", filePath)
-        assertTrue(PathValidatorPost().validate(loadFileEntry).isValid)
+        assertTrue(PathValidator().validate(loadFileEntry).isValid)
     }
 
     @Test
     fun pathDoesNotExist() {
         val filePath = "${getResourceFolderPath()}${File.separatorChar}file-does-not-exist"
         val loadFileEntry = LoadFileEntry("1", "non-existent", filePath)
-        assertFalse(PathValidatorPost().validate(loadFileEntry).isValid)
+        assertFalse(PathValidator().validate(loadFileEntry).isValid)
     }
 
     @Test
     fun directoryIsNotAFile() {
         val filePath = "${getResourceFolderPath()}${File.separatorChar}"
         val loadFileEntry = LoadFileEntry("1", "lacking a file", filePath)
-        assertFalse(PathValidatorPost().validate(loadFileEntry).isValid)
+        assertFalse(PathValidator().validate(loadFileEntry).isValid)
     }
 
     private fun getResourceFolderPath(): String {

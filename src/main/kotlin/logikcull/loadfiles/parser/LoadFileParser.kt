@@ -1,7 +1,7 @@
 package logikcull.loadfiles.parser
 
 import logikcull.loadfiles.LoadFileEntry
-import logikcull.loadfiles.validator.postload.PostLoadFileValidator
+import logikcull.loadfiles.validator.LoadFileResultValidator
 
 /**
  * The LoadFile is the base class that all file loaders should start from. It handles validation, parsing
@@ -9,7 +9,7 @@ import logikcull.loadfiles.validator.postload.PostLoadFileValidator
  *
  * @param postValidators The validators that validate any conditions needed from the resulting data of the load file
  */
-abstract class LoadFileParser(private val postValidators: List<PostLoadFileValidator>): AutoCloseable {
+abstract class LoadFileParser(private val postValidators: List<LoadFileResultValidator>): AutoCloseable {
 
     fun parse(): List<LoadFileEntry> {
         val results = parseLoad()

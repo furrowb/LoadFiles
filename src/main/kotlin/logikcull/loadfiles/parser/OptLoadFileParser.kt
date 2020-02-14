@@ -1,14 +1,13 @@
 package logikcull.loadfiles.parser
 
 import logikcull.loadfiles.LoadFileEntry
-import logikcull.loadfiles.validator.postload.PathValidatorPost
-import logikcull.loadfiles.validator.postload.PostLoadFileValidator
+import logikcull.loadfiles.validator.LoadFileResultValidator
 import java.nio.file.FileSystems
 import java.nio.file.Files
 
 class OptLoadFileParser(
         private val path: String,
-        private val validators: List<PostLoadFileValidator> = emptyList()) : LoadFileParser(validators)
+        private val validators: List<LoadFileResultValidator> = emptyList()) : LoadFileParser(validators)
 {
     private val bufferedReader = Files.newBufferedReader(FileSystems.getDefault().getPath(path))
 
