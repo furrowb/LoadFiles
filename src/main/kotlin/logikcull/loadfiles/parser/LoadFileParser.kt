@@ -11,12 +11,23 @@ import logikcull.loadfiles.validator.LoadFileResultValidator
  */
 abstract class LoadFileParser(private val postValidators: List<LoadFileResultValidator>): AutoCloseable {
 
+    /**
+     * Runs the parser for the load file and validates the results.
+     *
+     * @return the resulting entries from the load file
+     */
     fun parse(): List<LoadFileEntry> {
         val results = parseLoad()
         validatePostResults(results)
         return results
     }
 
+    /**
+     * Parses the load file for each load file type and returns the results.  Each load file parser is expected to
+     * override this method.
+     *
+     * @return the resulting entries from the load file
+     */
     protected open fun parseLoad(): List<LoadFileEntry> {
         throw NotImplementedError("Method not implemented")
     }
@@ -26,6 +37,7 @@ abstract class LoadFileParser(private val postValidators: List<LoadFileResultVal
             postValidators.forEach { validator ->
                 val result = validator.validate(loadFileEntry)
                 if (!result.isValid) {
+                    // Can log instead of throwing an error if we'd like to continue with the rest of the results
                     throw IllegalArgumentException(result.errorMessage)
                 }
             }
