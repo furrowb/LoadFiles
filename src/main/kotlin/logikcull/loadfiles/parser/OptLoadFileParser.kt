@@ -22,4 +22,8 @@ class OptLoadFileParser(
         bufferedReader.close()
     }
 
+    companion object {
+        fun fileExtension() = listOf(".opt")
+    }
+
 }

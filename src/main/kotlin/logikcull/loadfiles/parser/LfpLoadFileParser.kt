@@ -49,4 +49,8 @@ class LfpLoadFileParser(private val path: String, private val validators: List<L
     override fun close() {
         bufferedReader.close()
     }
+
+    companion object {
+        fun fileExtension() = listOf(".lfp")
+    }
 }

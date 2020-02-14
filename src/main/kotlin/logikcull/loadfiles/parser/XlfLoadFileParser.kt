@@ -41,4 +41,8 @@ class XlfLoadFileParser(private val path: String, private val validators: List<L
     override fun close() {
         //JAXB and File have nothing to close
     }
+
+    companion object {
+        fun fileExtension() = listOf(".xlf")
+    }
 }
