@@ -3,17 +3,11 @@
  */
 package logikcull.loadfiles
 
-import logikcull.loadfiles.parser.LoadFile
-import logikcull.loadfiles.parser.OptLoadFile
-import logikcull.loadfiles.validator.postload.PathValidatorPost
-import java.nio.file.FileSystems
-import java.nio.file.Files
+import logikcull.loadfiles.parser.LoadFileParser
 
 class App(private val parserFactory: ParserFactory) {
-    fun parse(pathname: String): LoadFile {
-        val path = FileSystems.getDefault().getPath(pathname)
-        val reader = Files.newBufferedReader(path)
-        return parserFactory.getParser(pathname, reader)
+    fun parse(pathname: String): LoadFileParser {
+        return parserFactory.getParser(pathname)
     }
 }
 

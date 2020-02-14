@@ -1,16 +1,16 @@
 package logikcull.loadfiles
 
-import logikcull.loadfiles.parser.LoadFile
-import logikcull.loadfiles.parser.OptLoadFile
+import logikcull.loadfiles.parser.LoadFileParser
+import logikcull.loadfiles.parser.OptLoadFileParser
+import logikcull.loadfiles.parser.XlfLoadFileParser
 import logikcull.loadfiles.validator.postload.PathValidatorPost
-import java.io.Reader
 
 class ParserFactory {
-    val pathValidator = PathValidatorPost()
-    fun getParser(path: String, reader: Reader): LoadFile {
-        return optLoadFile(reader)
+    private val pathValidator = PathValidatorPost()
+    fun getParser(path: String): LoadFileParser {
+        return optLoadFile(path)
     }
-    private fun optLoadFile(reader: Reader): LoadFile = OptLoadFile(reader, emptyList(), listOf(pathValidator))
-    private fun xlfLoadFile(reader: Reader): LoadFile = OptLoadFile(reader, emptyList(), listOf(pathValidator))
-    private fun lfpLoadFile(reader: Reader): LoadFile = OptLoadFile(reader, emptyList(), listOf(pathValidator))
+    private fun optLoadFile(path: String): LoadFileParser = OptLoadFileParser(path)
+    private fun xlfLoadFile(path: String): LoadFileParser = XlfLoadFileParser(path)
+    private fun lfpLoadFile(path: String): LoadFileParser = OptLoadFileParser(path)
 }

@@ -13,7 +13,7 @@ class PathValidatorPost: PostLoadFileValidator {
         return if (file.exists() && !file.isDirectory) {
             ValidatorResult(true)
         } else {
-            ValidatorResult(false, "The file doesn't exist or is a directory")
+            ValidatorResult(false, "The file ${file.path} doesn't exist or is a directory")
         }
     }
 }
