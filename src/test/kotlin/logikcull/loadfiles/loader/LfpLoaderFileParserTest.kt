@@ -62,4 +62,11 @@ class LfpLoaderFileParserTest {
             parser.parse()
         }
     }
+
+    @Test
+    fun nonExistentFile() {
+        assertFailsWith(java.nio.file.NoSuchFileException::class) {
+            LfpLoadFileParser("/path/to/nowhere").parse()
+        }
+    }
 }

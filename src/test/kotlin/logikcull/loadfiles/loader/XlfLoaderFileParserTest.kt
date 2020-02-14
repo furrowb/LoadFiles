@@ -2,11 +2,11 @@ package logikcull.loadfiles.loader
 
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.parser.XlfLoadFileParser
+import logikcull.loadfiles.parser.XlfParseException
 import org.junit.Test
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
-import java.lang.NullPointerException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -48,5 +48,13 @@ class XlfLoaderFileParserTest {
         val parser = XlfLoadFileParser(temp.absolutePath)
         // No exception is thrown. Just no data is generated. Possible area of improvement
         assertEquals(0, parser.parse().size)
+    }
+
+    @Test
+    fun nonExistentFile() {
+        // Possibly improvement: throw NoSuchFileException
+        assertFailsWith(XlfParseException::class) {
+            XlfLoadFileParser("/path/to/nowhere").parse()
+        }
     }
 }
