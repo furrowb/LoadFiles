@@ -23,6 +23,7 @@ class ParserFactoryTest {
         val parser = factory.getParser(temp.absolutePath)
         assertTrue(parser is OptLoadFileParser)
     }
+
     @Test
     fun getXlfLoadParser() {
         val temp = File.createTempFile("a-file", ".xlf")
