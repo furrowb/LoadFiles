@@ -18,6 +18,7 @@ It was also created to have a simple form of dependency injection that wasn't us
 The validators should be based on the `LoadFileResultValidator` so they can be added to the individual parser's collection of validators. 
 It uses the data class `ValidatorResult` so that it's not a simple pass/fail but can give meaningful feedback as to why it may have failed.
 This kind of takes after what both Go and Rust have for error handling.
+Adding a validator to a parser is as easy as adding them to a list in the `ParserFactory`.
 
 There are still some improvements that could be made. For example:
 1) A consistent way of handling non-existent files between the parsers

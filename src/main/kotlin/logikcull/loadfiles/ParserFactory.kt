@@ -11,6 +11,7 @@ import java.io.File
 class ParserFactory {
     private val pathValidator = PathValidator()
     private val controlNumberValidator = ControlNumberValidator(Regex(".+-\\d{6}"))
+    private val validators = listOf(pathValidator, controlNumberValidator)
 
     fun getParser(path: String): LoadFileParser {
         val file = File(path)
@@ -23,7 +24,7 @@ class ParserFactory {
         }
     }
 
-    private fun optLoadFile(path: String): LoadFileParser = OptLoadFileParser(path, listOf(pathValidator, controlNumberValidator))
-    private fun xlfLoadFile(path: String): LoadFileParser = XlfLoadFileParser(path, listOf(pathValidator, controlNumberValidator))
-    private fun lfpLoadFile(path: String): LoadFileParser = LfpLoadFileParser(path, listOf(pathValidator, controlNumberValidator))
+    private fun optLoadFile(path: String): LoadFileParser = OptLoadFileParser(path, validators)
+    private fun xlfLoadFile(path: String): LoadFileParser = XlfLoadFileParser(path, validators)
+    private fun lfpLoadFile(path: String): LoadFileParser = LfpLoadFileParser(path, validators)
 }
