@@ -7,9 +7,9 @@ import logikcull.loadfiles.validator.LoadFileResultValidator
  * The LoadFile is the base class that all file loaders should start from. It handles validation, parsing
  * and returning the resulting list of LoadFileEntry.
  *
- * @param postValidators The validators that validate any conditions needed from the resulting data of the load file
+ * @param validators The validators that validate any conditions needed from the resulting data of the load file
  */
-abstract class LoadFileParser(private val postValidators: List<LoadFileResultValidator>): AutoCloseable {
+abstract class LoadFileParser(private val validators: List<LoadFileResultValidator>): AutoCloseable {
 
     /**
      * Runs the parser for the load file and validates the results.
@@ -34,7 +34,7 @@ abstract class LoadFileParser(private val postValidators: List<LoadFileResultVal
 
     private fun validatePostResults(results: List<LoadFileEntry>) {
         results.forEach { loadFileEntry ->
-            postValidators.forEach { validator ->
+            validators.forEach { validator ->
                 val result = validator.validate(loadFileEntry)
                 if (!result.isValid) {
                     // Can log instead of throwing an error if we'd like to continue with the rest of the results
