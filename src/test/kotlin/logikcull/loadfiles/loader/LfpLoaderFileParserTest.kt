@@ -3,6 +3,7 @@ package logikcull.loadfiles.loader
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.exception.InvalidSizeException
 import logikcull.loadfiles.parser.LfpLoadFileParser
+import logikcull.loadfiles.validator.ControlNumberValidator
 import org.junit.Test
 import java.io.BufferedWriter
 import java.io.File
@@ -15,7 +16,7 @@ class LfpLoaderFileParserTest {
     @Test
     fun validResults() {
         val file = javaClass.getResource("/test.lfp").path.removePrefix("file:")
-        val parser = LfpLoadFileParser(file)
+        val parser = LfpLoadFileParser(file, listOf(ControlNumberValidator(Regex(".+"))))
 
         val results = parser.parse()
         assertEquals(3, results.size)
