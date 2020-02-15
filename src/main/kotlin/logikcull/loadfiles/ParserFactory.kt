@@ -5,13 +5,15 @@ import logikcull.loadfiles.parser.LoadFileParser
 import logikcull.loadfiles.parser.OptLoadFileParser
 import logikcull.loadfiles.parser.XlfLoadFileParser
 import logikcull.loadfiles.validator.ControlNumberValidator
+import logikcull.loadfiles.validator.FieldPresentValidator
 import logikcull.loadfiles.validator.PathValidator
 import java.io.File
 
 class ParserFactory {
     private val pathValidator = PathValidator()
     private val controlNumberValidator = ControlNumberValidator(Regex(".+-\\d{6}"))
-    private val validators = listOf(pathValidator, controlNumberValidator)
+    private val fieldPresentValidator = FieldPresentValidator()
+    private val validators = listOf(fieldPresentValidator, pathValidator, controlNumberValidator)
 
     fun getParser(path: String): LoadFileParser {
         val file = File(path)

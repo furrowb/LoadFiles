@@ -27,3 +27,5 @@ There are still some improvements that could be made. For example:
 1) Add a logger, like slf4j
 1) Log errors instead of throwing exceptions to allow execution to continue
 1) Wrap all parsing libraries so they can be swapped out/reused. For example, if I need to parse an XML-like structure again, it would be useful to have a single implementation that has just an interface instead of reimplementing it for each parser. Also, if for whatever reason JAXB turns out to be not the best solution, all you'd need to do is create a new concrete implementation and inject that instead of ripping out all the old logic
+1) More comments/docs for the more public facing classes
+1) Make validators be a lambda rather than an interface so they can be more easily created
