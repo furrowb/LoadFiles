@@ -9,7 +9,7 @@ class OptLoadFileParserTest {
     @Test
     fun testOptLoadFile() {
         val file = javaClass.getResource("/test.opt").path.removePrefix("file:")
-        val subject = OptLoadFileParser(file).parse()
+        val subject = OptLoadFileParser(file).use {  it.parse() }
 
         assertEquals(subject.size, 3)
         for (entry in subject) {

@@ -18,7 +18,7 @@ class LfpLoaderFileParserTest {
         val file = javaClass.getResource("/test.lfp").path.removePrefix("file:")
         val parser = LfpLoadFileParser(file, listOf(ControlNumberValidator(Regex(".+"))))
 
-        val results = parser.parse()
+        val results = parser.use{ it.parse() }
         assertEquals(3, results.size)
         val expected = listOf(
                 LoadFileEntry("test-000001", "Import Test 01", "IMAGES/001/test-000001.tif"),

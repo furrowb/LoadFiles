@@ -31,6 +31,7 @@ class XlfLoadFileParser(private val path: String, private val validators: List<L
     private fun createLoadFileEntries(element: XlfRootElement): List<LoadFileEntry> {
         return element.entries?.entryElements?.mapNotNull { entry ->
             if (entry.controlNumber == null || entry.volume == null || entry.imageName == null || entry.imagePath == null) {
+                // TODO Add logging to be aware of this condition
                 null
             } else {
                 LoadFileEntry(entry.controlNumber, entry.volume, entry.imagePath + entry.imageName)
