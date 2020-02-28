@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import logikcull.loadfiles.parser.OptLoadFileParser
+import logikcull.loadfiles.reader.CsvReader
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -17,7 +18,7 @@ class AppTest {
         val fullPath = javaClass.getResource("/test.opt").path
 
         val parserFactory = mock<ParserFactory> {
-            on { getParser(any()) } doReturn OptLoadFileParser(fullPath)
+            on { getParser(any()) } doReturn OptLoadFileParser(CsvReader(fullPath))
         }
         val subject = App(parserFactory)
         val opt = subject.parse(javaClass.getResource("/test.opt").path)

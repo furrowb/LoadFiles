@@ -2,6 +2,7 @@ package logikcull.loadfiles.parser
 
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.exception.InvalidSizeException
+import logikcull.loadfiles.reader.CsvReader
 import logikcull.loadfiles.validator.LoadFileResultValidator
 import java.nio.file.FileSystems
 import java.nio.file.Files
@@ -19,11 +20,13 @@ enum class VolumeAndFileField(val index: Int){
     PAGE_COUNT(3)
 }
 
-class LfpLoadFileParser(private val path: String, private val validators: List<LoadFileResultValidator> = emptyList()): LoadFileParser(validators) {
-    private val bufferedReader = Files.newBufferedReader(FileSystems.getDefault().getPath(path))
+class LfpLoadFileParser(
+    private val csvReader: CsvReader,
+    validators: List<LoadFileResultValidator> = emptyList()
+): LoadFileParser(validators) {
 
     override fun parseLoad(): List<LoadFileEntry> {
-        return bufferedReader.readLines().map { line ->
+        return csvReader.getLines().map { line ->
             val parts = line.split(",")
             if (parts.size != 6) {
                 throw InvalidSizeException(6)
@@ -47,7 +50,7 @@ class LfpLoadFileParser(private val path: String, private val validators: List<L
     }
 
     override fun close() {
-        bufferedReader.close()
+        csvReader.close()
     }
 
     companion object {

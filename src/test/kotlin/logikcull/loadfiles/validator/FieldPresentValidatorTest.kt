@@ -18,7 +18,7 @@ class FieldPresentValidatorTest {
         val entry = LoadFileEntry("", "volume", "path")
         val result = FieldPresentValidator().validate(entry)
         assertEquals(false, result.isValid)
-        assertEquals("Control number is empty or null", result.errorMessage)
+        assertEquals("Control number is empty", result.errorMessage)
     }
 
     @Test
@@ -26,7 +26,7 @@ class FieldPresentValidatorTest {
         val entry = LoadFileEntry("control", "", "path")
         val result = FieldPresentValidator().validate(entry)
         assertEquals(false, result.isValid)
-        assertEquals("Volume name is empty or null", result.errorMessage)
+        assertEquals("Volume name is empty", result.errorMessage)
     }
 
     @Test
@@ -34,7 +34,7 @@ class FieldPresentValidatorTest {
         val entry = LoadFileEntry("control", "volume", "")
         val result = FieldPresentValidator().validate(entry)
         assertEquals(false, result.isValid)
-        assertEquals("Path is empty or null", result.errorMessage)
+        assertEquals("Path is empty", result.errorMessage)
     }
 
     @Test
@@ -42,6 +42,6 @@ class FieldPresentValidatorTest {
         val entry = LoadFileEntry("control", "", "")
         val result = FieldPresentValidator().validate(entry)
         assertEquals(false, result.isValid)
-        assertEquals("Volume name is empty or null\nPath is empty or null", result.errorMessage)
+        assertEquals("Volume name is empty\nPath is empty", result.errorMessage)
     }
 }

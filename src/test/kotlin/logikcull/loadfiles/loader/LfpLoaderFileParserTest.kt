@@ -3,6 +3,7 @@ package logikcull.loadfiles.loader
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.exception.InvalidSizeException
 import logikcull.loadfiles.parser.LfpLoadFileParser
+import logikcull.loadfiles.reader.CsvReader
 import logikcull.loadfiles.validator.ControlNumberValidator
 import org.junit.Test
 import java.io.BufferedWriter
@@ -16,7 +17,7 @@ class LfpLoaderFileParserTest {
     @Test
     fun validResults() {
         val file = javaClass.getResource("/test.lfp").path.removePrefix("file:")
-        val parser = LfpLoadFileParser(file, listOf(ControlNumberValidator(Regex(".+"))))
+        val parser = LfpLoadFileParser(CsvReader(file), listOf(ControlNumberValidator(Regex(".+"))))
 
         val results = parser.use{ it.parse() }
         assertEquals(3, results.size)
@@ -40,7 +41,7 @@ class LfpLoaderFileParserTest {
         """.trimIndent())
         writer.close()
 
-        val parser = LfpLoadFileParser(temp.absolutePath)
+        val parser = LfpLoadFileParser(CsvReader(temp.absolutePath))
 
         assertFailsWith(InvalidSizeException::class, "Invalid size. Expected 6") {
             parser.parse()
@@ -57,7 +58,7 @@ class LfpLoaderFileParserTest {
         """.trimIndent())
         writer.close()
 
-        val parser = LfpLoadFileParser(temp.absolutePath)
+        val parser = LfpLoadFileParser(CsvReader(temp.absolutePath))
 
         assertFailsWith(InvalidSizeException::class, "Invalid size. Expected 4") {
             parser.parse()
@@ -67,7 +68,7 @@ class LfpLoaderFileParserTest {
     @Test
     fun nonExistentFile() {
         assertFailsWith(java.nio.file.NoSuchFileException::class) {
-            LfpLoadFileParser("/path/to/nowhere").parse()
+            LfpLoadFileParser(CsvReader("/path/to/nowhere")).parse()
         }
     }
 }
