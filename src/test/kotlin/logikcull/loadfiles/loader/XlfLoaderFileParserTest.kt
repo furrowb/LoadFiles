@@ -1,14 +1,10 @@
 package logikcull.loadfiles.loader
 
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
 import logikcull.loadfiles.LoadFileEntry
-import logikcull.loadfiles.model.XlfRootElement
 import logikcull.loadfiles.parser.XlfLoadFileParser
 import logikcull.loadfiles.reader.XmlParseException
 import logikcull.loadfiles.reader.XmlReader
 import org.junit.Test
-import org.mockito.Mockito.mock
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
