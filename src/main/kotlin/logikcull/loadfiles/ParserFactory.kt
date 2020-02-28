@@ -5,6 +5,7 @@ import logikcull.loadfiles.parser.LoadFileParser
 import logikcull.loadfiles.parser.OptLoadFileParser
 import logikcull.loadfiles.parser.XlfLoadFileParser
 import logikcull.loadfiles.reader.CsvReader
+import logikcull.loadfiles.reader.XmlReader
 import logikcull.loadfiles.validator.ControlNumberValidator
 import logikcull.loadfiles.validator.FieldPresentValidator
 import logikcull.loadfiles.validator.PathValidator
@@ -28,6 +29,6 @@ class ParserFactory {
     }
 
     private fun optLoadFile(path: String): LoadFileParser = OptLoadFileParser(CsvReader(path), validators)
-    private fun xlfLoadFile(path: String): LoadFileParser = XlfLoadFileParser(path, validators)
+    private fun xlfLoadFile(path: String): LoadFileParser = XlfLoadFileParser(XmlReader(path), validators)
     private fun lfpLoadFile(path: String): LoadFileParser = LfpLoadFileParser(CsvReader(path), validators)
 }

@@ -2,30 +2,14 @@ package logikcull.loadfiles.parser
 
 import logikcull.loadfiles.LoadFileEntry
 import logikcull.loadfiles.model.XlfRootElement
+import logikcull.loadfiles.reader.XmlReader
 import logikcull.loadfiles.validator.LoadFileResultValidator
-import java.io.File
-import java.lang.Exception
-import javax.xml.bind.JAXBContext
-import javax.xml.bind.JAXBException
 
-class XlfParseException(message: String, exception: Exception? = null): Exception(message, exception)
 
-class XlfLoadFileParser(private val path: String, private val validators: List<LoadFileResultValidator> = emptyList()): LoadFileParser(validators) {
-    private val file = File(path)
-
+class XlfLoadFileParser(private val xmlReader: XmlReader, validators: List<LoadFileResultValidator> = emptyList()): LoadFileParser(validators) {
     override fun parseLoad(): List<LoadFileEntry> {
-        try {
-            val jaxbContext = JAXBContext.newInstance(XlfRootElement::class.java)
-            val unmarshaller = jaxbContext.createUnmarshaller()
-            val rootElement = unmarshaller.unmarshal(file)
-            if (rootElement is XlfRootElement) {
-                return createLoadFileEntries(rootElement)
-            } else {
-                throw XlfParseException("Unknown root element returned")
-            }
-        } catch (e: JAXBException) {
-            throw XlfParseException("XLF parsing error: ${e.message}", e)
-        }
+        val rootElement = xmlReader.parseXmlFile<XlfRootElement>()
+        return createLoadFileEntries(rootElement)
     }
 
     private fun createLoadFileEntries(element: XlfRootElement): List<LoadFileEntry> {

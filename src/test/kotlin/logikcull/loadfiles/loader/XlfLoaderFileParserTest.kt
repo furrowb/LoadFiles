@@ -1,9 +1,14 @@
 package logikcull.loadfiles.loader
 
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import logikcull.loadfiles.LoadFileEntry
+import logikcull.loadfiles.model.XlfRootElement
 import logikcull.loadfiles.parser.XlfLoadFileParser
-import logikcull.loadfiles.parser.XlfParseException
+import logikcull.loadfiles.reader.XmlParseException
+import logikcull.loadfiles.reader.XmlReader
 import org.junit.Test
+import org.mockito.Mockito.mock
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -15,7 +20,8 @@ class XlfLoaderFileParserTest {
     @Test
     fun validResults() {
         val file = javaClass.getResource("/test.xlf").path.removePrefix("file:")
-        val subject = XlfLoadFileParser(file).parse()
+
+        val subject = XlfLoadFileParser(XmlReader(file)).parse()
 
         assertEquals(subject.size, 3)
         val expected = listOf(
@@ -45,7 +51,8 @@ class XlfLoaderFileParserTest {
         """.trimIndent())
         writer.close()
 
-        val parser = XlfLoadFileParser(temp.absolutePath)
+        val xmlReader = XmlReader(temp.absolutePath)
+        val parser = XlfLoadFileParser(xmlReader)
         // No exception is thrown. Just no data is generated. Possible area of improvement
         assertEquals(0, parser.parse().size)
     }
@@ -53,8 +60,9 @@ class XlfLoaderFileParserTest {
     @Test
     fun nonExistentFile() {
         // Possibly improvement: throw NoSuchFileException
-        assertFailsWith(XlfParseException::class) {
-            XlfLoadFileParser("/path/to/nowhere").parse()
+        val xmlReader = XmlReader("/path/to/nowhere")
+        assertFailsWith(XmlParseException::class) {
+            XlfLoadFileParser(xmlReader).parse()
         }
     }
 }
